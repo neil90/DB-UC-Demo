@@ -51,10 +51,9 @@ provider "aws" {
 }
 // -------------------
 
-// this one shouldn't need to be created based on your code
-// note in resources that have provider = databricks.mws vs provider = databricks.workspace
 // This will tell if the resources is doing a Account level or Workspace level action
 // initialize provider in "MWS" mode for account-level resources
+// note in resources that have provider = databricks.mws vs provider = databricks.workspace
 provider "databricks" {
   alias      = "mws"
   host       = "https://accounts.cloud.databricks.com"
@@ -82,18 +81,15 @@ resource "random_string" "naming" {
 locals {
   prefix = "demo${random_string.naming.result}"
   tags = {}
-  # analyst_user_names_clean_map = [
-  #   for email in var.databricks_users : replace(replace(split("@", email)[0], ".", "_"), "+", "_")
-  #   ]
 }
 
-# [for s in var.list : upper(s) if s != ""]
 // ------------------------
 
 
 // This is just creating neccessary AWs metastora infra
 // bucket -> managed data location
 // iam role -> that has trusted policy so that databricks account can access and policy for s3 bucket access
+// 2 policies are added to it and 1 assume role policy
 resource "aws_s3_bucket" "unity_metastore" {
   bucket = "${local.prefix}-metastore"
   acl    = "private"
@@ -159,6 +155,7 @@ resource "aws_iam_policy" "unity_metastore" {
   })
 }
 
+// Addtitional Policy to access Databricks-Datasets
 // Required, in case https://docs.databricks.com/data/databricks-datasets.html are needed
 resource "aws_iam_policy" "sample_data" {
   policy = jsonencode({
@@ -185,6 +182,7 @@ resource "aws_iam_policy" "sample_data" {
     Name = "${local.prefix}-unity-catalog IAM policy"
   })
 }
+
 
 resource "aws_iam_role" "metastore_data_access" {
   name                = "${local.prefix}-uc-access"
