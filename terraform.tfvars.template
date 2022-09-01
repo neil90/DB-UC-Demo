@@ -1,0 +1,8 @@
+databricks_account_id = "..."
+databricks_account_username = "..."
+databricks_account_password = "..."
+databricks_workspace_url = "..."
+databricks_workspace_id = "..."
+databricks_users = []
+region = "..."
+s3_existing_data = "..."

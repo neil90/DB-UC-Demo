@@ -1,17 +1,31 @@
 
 // Variables
 // These are Account Level Admin variables
-variable "databricks_account_username" {}
-variable "databricks_account_password" {}
-variable "databricks_account_id" {} // Is GUID available in bottom left of account admin page
+variable "databricks_account_username" {
+  description = "Databricks Account Admin Username"
+}
+variable "databricks_account_password" {
+  description = "Databricks Account Admin Password"
+}
+variable "databricks_account_id" {
+  description = "ID available in bottom left of account admin page"
+}
 
-variable "databricks_workspace_url" {} // Need the Workspace URL we are going to enable UC with
+variable "databricks_workspace_url" {
+  description = "Need the Workspace URL we are going to enable UC with"
+}
 
-variable "databricks_workspace_id" {} // ID of the databricks workspace
+variable "databricks_workspace_id" {
+  description = "ID of the databricks workspace"
+}
 
-variable "databricks_users" {} // List of users to add to workspace
+variable "databricks_users" {
+  description = "List of users to add to workspace"
+} 
 
-variable "s3_existing_data" {} // bucket with existing data
+variable "s3_existing_data" {
+  description = "bucket with existing data"
+}
 
 variable "region" {}
 
@@ -327,6 +341,9 @@ resource "databricks_sql_endpoint" "small" {
       value = "Small"
     }
   }
+  depends_on = [
+    databricks_metastore_assignment.default_metastore
+  ]
 }
 
 // Give access to Analyst Group to Stop/Restart endpoint
