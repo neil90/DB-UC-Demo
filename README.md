@@ -1,5 +1,6 @@
 # Reference DB-UC-Demo
-This is a reference terraform script on creating a brand new UC Metastore and assigning it to Workspace.
+
+This is a reference terraform script on creating a brand new UC Metastore and assigning it to Workspace. Mainly useful in understanding how the general UC workspace enablement flow is. Not mean't for production in any capacity.
 
 In this script we do the following(summary, see comments in main.tf for more detail) ->
 
